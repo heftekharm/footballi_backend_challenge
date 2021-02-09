@@ -9,6 +9,6 @@ after installing node and npm you have to install its dependecies by the followi
 
 ### /{username}/starred
 
-method|description
-get|returns a user name starred repositories
+method | description
+get | returns a user name starred repositories
 
