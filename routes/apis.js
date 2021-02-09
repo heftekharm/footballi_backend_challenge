@@ -2,12 +2,14 @@ const Router = require('express').Router;
 const axios = require('axios').default;
 const router = Router();
 const {like} = require('sequelize')["Op"];
+
 const RepositoryModel = require('../models/repository');
 const TagModel = require('../models/tag');
 
-RepositoryModel.hasMany(TagModel,{foreignKey:'repositoryId',constraints:true});
+TagModel.belongsTo(RepositoryModel,{foreignKey:'repositoryId'})
 RepositoryModel.sync();
 TagModel.sync();
+
 const preApi = '/:username/starred';
 
 router.get(preApi, async (req, res) => {
@@ -24,7 +26,8 @@ router.get(preApi, async (req, res) => {
 });
 
 async function getReposWithTag(username, tag) {
-    return await TagModel.findAll({
+    
+    let tagInstances= await TagModel.findAll({
         where: {
             username: username,
             tag: {
@@ -33,6 +36,15 @@ async function getReposWithTag(username, tag) {
         },
         include:RepositoryModel
     });
+    let repositories=tagInstances.map(tagInstance=>tagInstance["Repository"]);
+    let distictRepositriesIds=new Set();
+    let distinctRepositories=repositories.filter(repo=>{
+        let repoId=repo["id"];
+        if(distictRepositriesIds.has(repoId)) return false;
+        distictRepositriesIds.add(repoId);
+        return true;
+    });
+    return distinctRepositories;
 }
 
 async function getAllStarredRepos(username) {

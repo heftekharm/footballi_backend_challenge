@@ -11,11 +11,7 @@ const sequelize = new Sequelize({
 const TagModel=sequelize.define('Tag',{
     repositoryId:{
         type:DataTypes.STRING,
-        primaryKey:true,
-        references:{
-            model:'Repositories',
-            key:'id'
-        }
+        primaryKey:true
     },
     username:{
         type:DataTypes.STRING,
