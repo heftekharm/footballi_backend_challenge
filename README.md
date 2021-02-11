@@ -3,7 +3,7 @@
 you need nodejs and npm to run this application.
 after installing node and npm, you have to install its dependecies by the following command `npm install`, then you can run the application using `npm start`.
 
-## Apis
+## How to use Apis
 
 * getting user's all starred repositories:
     * GET /api/v1/{username}/starred
@@ -18,6 +18,11 @@ after installing node and npm, you have to install its dependecies by the follow
     * POST /api/v1/{username}/starred/{repositoryId}/tags
     * body:{tag:XXX}
 
+* deleting all tags of a particular user's repository:
+    * DELETE /api/v1/{username}/starred/{repositoryId}/tags
+
+* deleting a tag of a particular user's repository:
+    * DELETE /api/v1/{username}/starred/{repositoryId}/tags/{tag}
 
 
 
